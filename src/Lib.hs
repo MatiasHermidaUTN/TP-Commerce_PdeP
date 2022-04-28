@@ -5,8 +5,6 @@ module Lib
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
 
-sumaDos num = num + 2
-
 entregaSencilla :: String -> Bool
 entregaSencilla fecha = rem (length fecha) 2 == 0
 
@@ -36,7 +34,8 @@ descodiciarProducto :: String -> String
 descodiciarProducto nombreProducto = take 10 nombreProducto
 versionBarata :: String -> String
 versionBarata = reverse.descodiciarProducto
-RESOLUCION DE AYUDANTE:
+
+{-RESOLUCION DE AYUDANTE:
 
 precioTotal :: Float -> Float -> Float -> Float -> Float
 precioTotal precioUnitario cantidad descuento costoDeEnvio = aplicarCostoDeEnvio (aplicarDescuento precioUnitario descuento * cantidad) costoDeEnvio
@@ -73,3 +72,4 @@ productoXL nombreDeProducto = nombreDeProducto ++ " XL"
 
 versionBarata :: String -> String
 versionBarata nombreDeProducto = reverse . descodiciarProducto $ nombreDeProducto
+-}
