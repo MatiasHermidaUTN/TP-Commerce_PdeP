@@ -5,4 +5,4 @@ module Lib
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
 
-suma2 = (2+)
+sumaDos num = num + 2
