@@ -12,25 +12,25 @@ type Producto = (Nombre, Precio)
 
 precioTotal :: Producto -> Float -> Float -> Float -> Float
 precioTotal (_, precioDelProducto) cantidad descuento costoEnvio =
- aplicarCostoDeEnvio (aplicarDescuento precioDelProducto descuento * cantidad) costoEnvio
+ (aplicarCostoDeEnvio costoEnvio).(* cantidad).(aplicarDescuento descuento) $ precioDelProducto
 
 aplicarCostoDeEnvio :: Float -> Float -> Float
-aplicarCostoDeEnvio unPrecio unCostoDeEnvio = unPrecio + unCostoDeEnvio
+aplicarCostoDeEnvio unCostoDeEnvio unPrecio = unPrecio + unCostoDeEnvio
 
 aplicarDescuento :: Float -> Float -> Float 
-aplicarDescuento unPrecio unDescuento = unPrecio * (1-unDescuento) --0<=descuento<=1
+aplicarDescuento unDescuento unPrecio = (*unPrecio).(1-) $ unDescuento --0<=descuento<=1
 
 entregaSencilla :: String -> Bool
 entregaSencilla unaFecha = (even.length) unaFecha
 
 productoDeElite :: Producto -> Bool
-productoDeElite producto = productoDeLujo producto && productoCodiciado producto && (not.productoCorriente)  producto
+productoDeElite producto = ((&&).productoDeLujo $ producto).((&&).productoCodiciado $ producto).not.productoCorriente $ producto
 
 productoDeLujo :: Producto -> Bool
 productoDeLujo (nombreProducto, _) = elem 'x' nombreProducto || elem 'z'  nombreProducto || elem 'X' nombreProducto || elem 'Z'  nombreProducto
 
 productoCodiciado :: Producto -> Bool
-productoCodiciado (nombreProducto, _) = length nombreProducto > 10
+productoCodiciado (nombreProducto, _) = (>10).length $ nombreProducto
 
 productoCorriente :: Producto -> Bool
 productoCorriente (nombreProducto, _) = letraVocal.head $ nombreProducto
