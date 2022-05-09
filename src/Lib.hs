@@ -36,7 +36,7 @@ estaEnListaLetras :: String -> Char -> Bool
 estaEnListaLetras listaLetras letra = elem letra listaLetras 
 
 algunoVerdadero :: [Bool] -> Bool
-algunoVerdadero lista = any (== True) lista
+algunoVerdadero = any (== True)
 
 productoCodiciado :: Producto -> Bool
 productoCodiciado = (>10).length.fst
@@ -48,10 +48,13 @@ esLetraVocal :: Char -> Bool
 esLetraVocal unaLetra = estaEnListaLetras "aeiouAEIOU" unaLetra 
 
 productoXL :: Producto -> Producto
-productoXL producto = ((++ "XL").fst $ producto, snd producto)
+productoXL producto = alterarNombre (++ "XL") producto
 
 versionBarata :: Producto -> Producto
-versionBarata producto = (reverse.fst.descodiciarProducto $ producto, snd producto)
+versionBarata = (alterarNombre reverse).descodiciarProducto
 
 descodiciarProducto :: Producto -> Producto
-descodiciarProducto producto = ((take 10).fst $ producto, snd producto)
+descodiciarProducto producto = alterarNombre (take 10) producto
+
+alterarNombre :: (String -> String) -> Producto -> Producto
+alterarNombre unaFuncion producto = (unaFuncion.fst $ producto, snd producto)
