@@ -6,9 +6,9 @@ someFunc :: IO ()
 someFunc = putStrLn "someFunc"
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 
-type NombreDelProducto = String
-type PrecioDelProducto = Float
-type Producto = (NombreDelProducto, PrecioDelProducto)
+type Nombre = String
+type Precio = Float
+type Producto = (Nombre, Precio)
 
 precioTotal :: Producto -> Float -> Float -> Float -> Float
 precioTotal (_, precioDelProducto) cantidad descuento costoEnvio =
