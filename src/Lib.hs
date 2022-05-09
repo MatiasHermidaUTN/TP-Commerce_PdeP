@@ -18,7 +18,7 @@ aplicarCostoDeEnvio :: Float -> Float -> Float
 aplicarCostoDeEnvio unCostoDeEnvio unPrecio = unPrecio + unCostoDeEnvio
 
 aplicarDescuento :: Float -> Float -> Float 
-aplicarDescuento unDescuento unPrecio = (*unPrecio).(1-) $ unDescuento --0<=descuento<=1
+aplicarDescuento unDescuento unPrecio = (*unPrecio).(1-) $ unDescuento
 
 entregaSencilla :: String -> Bool
 entregaSencilla = (even.length)
@@ -27,16 +27,25 @@ productoDeElite :: Producto -> Bool
 productoDeElite producto = ((&&).productoDeLujo $ producto).((&&).productoCodiciado $ producto).not.productoCorriente $ producto
 
 productoDeLujo :: Producto -> Bool
-productoDeLujo producto = ((elem 'x').(fst)) producto || ((elem 'z').(fst)) producto || ((elem 'X').(fst)) producto || ((elem 'Z').(fst)) producto
+productoDeLujo producto = (contieneAlgunaDeLasLetras "xzXZ").fst $ producto
+
+contieneAlgunaDeLasLetras :: String -> String -> Bool
+contieneAlgunaDeLasLetras listaLetras nombre = algunoVerdadero.(map (estaEnListaLetras listaLetras)) $ nombre
+
+estaEnListaLetras :: String -> Char -> Bool
+estaEnListaLetras listaLetras letra = elem letra listaLetras 
+
+algunoVerdadero :: [Bool] -> Bool
+algunoVerdadero lista = any (== True) lista
 
 productoCodiciado :: Producto -> Bool
 productoCodiciado = (>10).length.fst
 
 productoCorriente :: Producto -> Bool
-productoCorriente = letraVocal.head.fst
+productoCorriente = esLetraVocal.head.fst
 
-letraVocal :: Char -> Bool
-letraVocal unaLetra = elem unaLetra "aeiouAEIOU"
+esLetraVocal :: Char -> Bool
+esLetraVocal unaLetra = estaEnListaLetras "aeiouAEIOU" unaLetra 
 
 productoXL :: Producto -> Producto
 productoXL producto = ((++ "XL").fst $ producto, snd producto)
